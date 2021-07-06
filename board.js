@@ -6,9 +6,9 @@ let board = [
     ['', '', '']
 ]
 
-let ai = 'X';    // ❌
-let human = 'O';  // 🦆
-let aiSymbol = "❌";
+let ai = 'X';    // ❌🐱‍💻🥵
+let human = 'O';  // 🦆🥶🧊
+let aiSymbol = "🐱‍💻";
 let humanSymbol = "🦆";
 
 let currentPlayer = human;
@@ -17,7 +17,6 @@ function setup() {
     h1 = document.createElement("h1");
     heading = document.createTextNode("Tic Tac Toe vs MiniMax Algorithm")
     h1.appendChild(heading);
-    h1.style.color = "white";
     body.appendChild(h1);
 
     makeBoard();
@@ -37,7 +36,7 @@ function setup() {
         }
     }
 
-    bestMove();
+    //bestMove();
 }
 
 function makeBoard() {
@@ -110,19 +109,38 @@ function checkGameEnd() {
   let result = checkWinner();
     if (result != null) {
       let resultText;
-        let resultP = document.createElement("p");
-        resultP.style.fontSize = '32pt';
-        if (result == 'tie') {
-            resultText = document.createTextNode("Tie!");
-        } else {
-            resultText = document.createTextNode(`${result} wins!`);
+      let btn = document.createElement("button");
+      let resultP = document.createElement("p");
+      let table = document.getElementById('tictactoeField');
+      let cells = table.getElementsByTagName('td');
+      if (result == 'tie') {
+          resultText = document.createTextNode("Tie!");
+          btn.innerHTML = "Try again?";
+      } else {
+        // If AI wins
+        if (result == 'X') {
+          resultText = document.createTextNode(`${aiSymbol} wins!`);
+          btn.innerHTML = `Try again, ${humanSymbol}?`;
         }
+
+        if (result == 'O') {
+          resultText = document.createTextNode(`${humanSymbol} wins!`);
+          btn.innerHTML = `Try again, ${humanSymbol}?`;
+        }
+      }
+
+      btn.classList.add("reload");
+      btn.onclick = function () {
+        location.reload();
+      };
+
+      
       resultP.appendChild(resultText);
       resultP.classList.add("result");
       body.appendChild(resultP);
+      body.appendChild(btn);
 
-      let table = document.getElementById('tictactoeField');
-      let cells = table.getElementsByTagName('td');
+      
 
       for (let i = 0; i < cells.length; i++) {
           let cell = cells[i];

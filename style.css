@@ -1,10 +1,19 @@
 * {
     margin: 0;
     padding: 0;
+    color: white;
+    font-family: 'Roboto', 'Courier New', Courier, monospace;
 }
 
 body {
     background-color: #121212;
+    text-align: center;
+}
+
+h1 {
+    color: white;
+    margin: 5vh 0;
+    font-weight: lighter;
 }
 
 table {
@@ -15,10 +24,9 @@ table {
   
 table td {
     border: 1px solid white;
-    width: 5vw;
-    height: 5vw;
-    color: white;
-    font-size: 16;
+    width: 10vw;
+    height: 10vw;
+    font-size: 32pt;
     text-align: center;
 }
   
@@ -39,5 +47,14 @@ table tr td:last-child {
 }
 
 p.result {
-    color: white;
+    font-size: 32pt;
+    margin: 3vw;
+}
+
+button.reload {
+    font-size: 25pt;
+    background: #5100e7;
+    padding: 1vw;
+    border: none;
+    border-radius: 25px;
 }
