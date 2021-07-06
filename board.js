@@ -6,8 +6,11 @@ let board = [
     ['', '', '']
 ]
 
-let ai = 'O';
-let human = 'X';
+let ai = 'X';    // ❌
+let human = 'O';  // 🦆
+let aiSymbol = "❌";
+let humanSymbol = "🦆";
+
 let currentPlayer = human;
 
 function setup() {
@@ -15,7 +18,6 @@ function setup() {
     heading = document.createTextNode("Tic Tac Toe vs MiniMax Algorithm")
     h1.appendChild(heading);
     h1.style.color = "white";
-    h1.style.align = "center";
     body.appendChild(h1);
 
     makeBoard();
@@ -104,13 +106,48 @@ function checkWinner() {
     }
 }
 
+function checkGameEnd() {
+  let result = checkWinner();
+    if (result != null) {
+      let resultText;
+        let resultP = document.createElement("p");
+        resultP.style.fontSize = '32pt';
+        if (result == 'tie') {
+            resultText = document.createTextNode("Tie!");
+        } else {
+            resultText = document.createTextNode(`${result} wins!`);
+        }
+      resultP.appendChild(resultText);
+      resultP.classList.add("result");
+      body.appendChild(resultP);
+
+      let table = document.getElementById('tictactoeField');
+      let cells = table.getElementsByTagName('td');
+
+      for (let i = 0; i < cells.length; i++) {
+          let cell = cells[i];
+          cell.onclick = function () {
+              console.log("Stop clicking! The game is over!");
+          }
+      }
+
+      return true;
+    } else {
+      return false;
+    }
+}
+
 function mousePressed(row, column) {
     if (currentPlayer == human) {
         if (board[row][column] == '') {
             board[row][column] = human;
             updateBoard();
-            currentPlayer = ai;
-            bestMove();
+            if (!(checkGameEnd())) {
+              currentPlayer = ai;
+              bestMove();
+            } else {
+              console.log("Game over :(")
+            }
           }
     }
 }
@@ -124,25 +161,13 @@ function updateBoard() {
         for (let j = 0; j < cells.length; j++) {
             if (cells[j].parentNode.rowIndex == i && cells[j].cellIndex == j) {
                 if(board[i][j] == human) {
-                    cells[j].appendChild(document.createTextNode(human))
+                    cells[j].innerHTML = humanSymbol;
                 }
                 else if (board[i][j] == ai){
-                    cells[j].appendChild(document.createTextNode(ai))
+                    cells[j].innerHTML = aiSymbol;
                 }
             }
         }
     }
-  
-    let result = checkWinner();
-    if (result != null) {
-        let resultP = document.createElement("p");
-        resultP.style.fontSize = '32pt';
-        if (result == 'tie') {
-            let resultText = document.createTextNode("Tie!");
-        } else {
-            let resultText = document.createTextNode(`${result} wins!`);
-        }
-      resultP.appendChild(resultP);
-      body.appendChild(resultP);
-    }
-  }
+    console.log(board)
+}

@@ -39,7 +39,11 @@ function bestMove() {
     }
     board[move.i][move.j] = ai;
     updateBoard();
-    currentPlayer = human;
+    if (!(checkGameEnd())) {
+        currentPlayer = human;
+      } else {
+        console.log("Game over :(")
+      }
 }
 
 function minimax(board, depth, isMaximizing) {
